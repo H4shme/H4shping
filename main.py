@@ -5,10 +5,6 @@ def clear():
         os.system("cls")
     else: 
         os.system("clear")
-
-
-
-
 try:
     import socket
     from colorama import Fore 
