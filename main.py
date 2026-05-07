@@ -52,7 +52,7 @@ opened_port = []
 
 
 
-with open('libraries/top_100_common_ports.json') as f:
+with open('lib/top_100_common_ports.json') as f:
     data = json.load(f)
 
 
@@ -65,16 +65,18 @@ def check_port(ip, start_port, end_port):
         sock.settimeout(1)
         result = sock.connect_ex((ip, port))
         if result == 0:
-            opened_port.append(port)
+            opened_port.append(ip+ ":" + str(port))
+            print(Fore.GREEN + ip + ":" + str(port) + " (OPEN)")
             oneportatleast = True
         else:
+            print("\r"+Fore.RED+ip+":" + str(port) + " (CLOSED)")
             
 
 
     if oneportatleast == True:
         clear()
         print(Fore.GREEN+banner)
-        print(f"Opened ports = ", opened_port)
+        print(f"Opened ports = ", *opened_port)
     else:
         clear()
         print(Fore.RED+banner)
@@ -117,12 +119,14 @@ def top100commonsports(ip):
         print(Fore.RED+banner)
         print("No port founded :/")
 
-
+def save_scans():
+    pass
 
 
 def main():
-    print(banner + "\n\n")
-    print(Fore.WHITE+"Choose a scan type\n1-Scan by port range | 2-Scan the most 100 ports")
+    clear()
+    print(Fore.WHITE+banner + "\n\n")
+    print(Fore.WHITE+"Choose a scan type\n\n1-Scan by port range\n2-Scan the most 100 common ports\n\n")
     menu_choice = input(Fore.WHITE+"> ")
     if menu_choice == "1":
         clear()
@@ -132,12 +136,12 @@ def main():
         print(Fore.WHITE+banner)
         ip = input(Fore.BLUE+"IP : ")
         top100commonsports(ip)
-
     else:
-        print("Az")
+        print(Fore.RED+"Syntax Error")
+        time.sleep(1)
+        main()
 
 #Check if it's launched itself and not as an module
 if __name__ == '__main__':
-    clear()
     main()
 
