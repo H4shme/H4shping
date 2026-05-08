@@ -1,7 +1,7 @@
 import os
 
 def clear():
-    if os.name == 'nt':
+    if os.name == 'nt': 
         os.system("cls")
     else: 
         os.system("clear")
@@ -11,6 +11,7 @@ try:
     import time
     import requests
     import json
+    from io import StringIO
 
 except ImportError:
     clear()
@@ -47,13 +48,15 @@ HHHHHHHHH     HHHHHHHHH      $:::$         sssssssssss    hhhhhhh     hhhhhhh
                              $$$$$                                           
                                                                                              
                             PORT SCANNER BY H4$H                             """
-
 opened_port = []
+io = StringIO()
+
 
 
 
 with open('lib/top_100_common_ports.json') as f:
     data = json.load(f)
+
 
 
 
@@ -68,6 +71,7 @@ def check_port(ip, start_port, end_port):
             opened_port.append(ip+ ":" + str(port))
             print(Fore.GREEN + ip + ":" + str(port) + " (OPEN)")
             oneportatleast = True
+
         else:
             print("\r"+Fore.RED+ip+":" + str(port) + " (CLOSED)")
             
@@ -77,10 +81,11 @@ def check_port(ip, start_port, end_port):
         clear()
         print(Fore.GREEN+banner)
         print(f"Opened ports = ", *opened_port)
+        save_scans()
     else:
         clear()
         print(Fore.RED+banner)
-        print("No port founded :/")
+        print("No open port founded :/")
 
 
 def check_port_range():
@@ -90,6 +95,7 @@ def check_port_range():
     end_port = int(input(Fore.RED + "End Port : "))
     clear()
     print(Fore.BLUE+banner)
+
     check_port(ip, start_port, end_port)
 
 
@@ -105,8 +111,9 @@ def top100commonsports(ip):
         result = sock.connect_ex((ip, int(top100port)))
         if result == 0:
             print(Fore.GREEN + str(top100port) + " | " + top100service + " (" + top100proto +")")
-            opened_port.append(str(top100port) + " | " + top100service + " (" + top100proto +")")
+            opened_port.append("IP : "+ip + " OPEN PORTS : "+str(top100port) + " SERVICE : " + top100service + " (" + top100proto +")")
             oneportatleast = True
+
         else: 
             print("\r"+Fore.RED+str(top100port)+" | " + top100service + " (" + top100proto + ")")
 
@@ -114,13 +121,26 @@ def top100commonsports(ip):
         clear()
         print(Fore.GREEN+banner)
         print(Fore.WHITE+"Opened ports = ", *opened_port)
+
+        save_scans()
     else:
         clear()
         print(Fore.RED+banner)
         print("No port founded :/")
 
 def save_scans():
-    pass
+    try:
+        with open('scans/scanned.json', 'r') as f:
+            savedata = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        savedata = []
+
+    savedata.append(opened_port)
+
+    with open('scans/scanned.json', 'w') as f:
+        json.dump(savedata, f)
+
+
 
 
 def main():
@@ -131,11 +151,13 @@ def main():
     if menu_choice == "1":
         clear()
         check_port_range()
+
     elif menu_choice == "2":
         clear()
         print(Fore.WHITE+banner)
         ip = input(Fore.BLUE+"IP : ")
         top100commonsports(ip)
+
     else:
         print(Fore.RED+"Syntax Error")
         time.sleep(1)
