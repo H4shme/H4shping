@@ -1,6 +1,6 @@
 # H4sh — Python Port Scanner
 
-<img width="300" height="200" alt="Capture d’écran 2026-05-08 à 10 47 32" src="https://github.com/user-attachments/assets/f89fd5c4-a4c5-465e-97e5-cc6969dd67d4" />
+<img width="300" height="200" alt="Preview" src="https://github.com/user-attachments/assets/f89fd5c4-a4c5-465e-97e5-cc6969dd67d4" />
 
 A CLI port scanner with colorized output and scan persistence.
 
@@ -64,7 +64,6 @@ python3 main.py
 ```
 
 ---
-<img width="559" height="453" alt="Capture d’écran 2026-05-08 à 10 47 16" src="https://github.com/user-attachments/assets/18f77e20-8d5f-44f1-a250-5378cf3fe387" />
 
 
 ## License
