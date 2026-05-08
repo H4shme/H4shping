@@ -60,7 +60,7 @@ python3 main.py
 ├── lib/
 │   └── top_100_common_ports.json
 └── scans/
-    └── scanned.json          # auto-created on first open port found
+    └── scanned.json          # auto-completed by script
 ```
 
 ---
